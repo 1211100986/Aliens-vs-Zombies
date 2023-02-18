@@ -16,8 +16,6 @@
 #include <ctime>
 #include <iomanip>
 
-using namespace std;
-
 class Board
 {
 private:
@@ -29,6 +27,7 @@ public:
     Board(int Row, int Col);
     void init(int Row, int Col);
     void display() const;
+    bool moveAlien(char direction);
 };
 
 Board::Board(int Row, int Col)
@@ -68,6 +67,7 @@ void Board::init(int Row, int Col)
     }
     map_[Col_ / 2][Row_ / 2] = 'A';
 }
+
 
 void Board::display() const
 {
@@ -122,15 +122,22 @@ void Board::display() const
          << endl;
 }
 
-void startGame()
-{
-    Board board;
+void startGame() {
+    int rows, columns, zombies;
+    cout << "Enter number of rows: ";
+    cin >> rows;
+    cout << "Enter number of columns: ";
+    cin >> columns;
+    cout << "Enter number of zombies: ";
+    cin >> zombies;
+    Board board(rows, columns);
     board.display();
+
+    // Add code here to start the game
 }
 
 void displayMenu()
 {
-
     cout << "!==========================================================!" << endl;
     cout << "!                        ALIEN VS ZOMBIE                   !" << endl;
     cout << "!==========================================================!" << endl;
@@ -147,7 +154,7 @@ void displayDefault(int rows, int columns, int zombies)
 {
     cout << "ROWS = " << rows << endl;
     cout << "COLUMNS = " << columns << endl;
-    cout << "ZOMBIE = " << zombies << endl;
+    cout << "ZOMBIES = " << zombies << endl;
     cout << endl;
 }
 
@@ -165,7 +172,6 @@ void displayHelp()
     cout << endl;
 }
 
-int zombies = 10;
 int main()
 {
     int rows = 5;
@@ -177,7 +183,7 @@ int main()
     displayMenu();
     do
     {
-        cout << "Select =>";
+        cout << "Select => ";
         cin >> select;
         select = toupper(select);
         cout << endl;
@@ -190,21 +196,26 @@ int main()
             displayHelp();
             break;
         case '3':
-            startGame();
+            cout << "Change game settings" << endl;
+            cout << "Enter number of rows: ";
+            cin >> rows;
+            cout << "Enter number of columns: ";
+            cin >> columns;
+            cout << "Enter number of zombies: ";
+            cin >> zombies;
             break;
-        case '4':;
+        case '4':
+            cout << "Load or save game" << endl;
             break;
         case '5':
             done = true;
             break;
         default:
-            cout << "Invalid selection, try again!" << endl;
-            cout << endl;
+            cout << "Invalid selection" << endl;
             break;
         }
-
     } while (!done);
-    cout << endl;
-    cout << "THE END!" << endl;
+
+    return 0;
 }
 
